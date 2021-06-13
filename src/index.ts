@@ -1,4 +1,4 @@
-import { fromEvent, timer, merge } from "rxjs";
+import { fromEvent, timer, merge, pipe } from "rxjs";
 import { map, scan, switchMapTo, takeUntil } from "rxjs/operators";
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
@@ -33,6 +33,7 @@ const go$ = timer(200, 500).pipe(
   takeUntil(end$)
 );
 const actions$ = merge(go$, resetClick$, multiplyBy2Click$);
+const mapActionToValue = pipe(map((action: any) => action.value));
 const engine$ = startClick$.pipe(
   switchMapTo(actions$),
   scan(
@@ -43,9 +44,9 @@ const engine$ = startClick$.pipe(
       return { ...state, ...action, value: state.transform(state.value + 1) };
     },
     { type: "none", value: 0, transform: (number) => number }
-  ),
-  map((action: any) => action.value)
+  )
 );
-engine$.subscribe((value: number) => {
+const allNumbers$ = engine$.pipe(mapActionToValue);
+allNumbers$.subscribe((value: number) => {
   document.getElementById("numbers").textContent = value.toString();
 });
