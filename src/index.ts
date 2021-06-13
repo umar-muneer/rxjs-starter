@@ -39,7 +39,7 @@ const oddChecked$ = toggleOdd$.pipe(
 );
 const oneMinute$ = timer(60000);
 const end$ = merge(oneMinute$, endClick$);
-const go$ = timer(200, 500).pipe(
+const go$ = timer(200, 1000).pipe(
   map(() => {
     return {
       type: "data",
@@ -65,6 +65,9 @@ const engine$ = startClick$.pipe(
 const allNumbers$ = engine$.pipe(mapActionToValue);
 const evenNumbers$ = evenChecked$.pipe(
   switchMapTo(engine$),
+  map((action: any) =>
+    action.type === "reset" ? { ...action, value: 0 } : { ...action }
+  ),
   filter((action: any) => action.value % 2 === 0),
   mapActionToValue
 );
