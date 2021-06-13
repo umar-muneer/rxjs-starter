@@ -1,5 +1,5 @@
 import { fromEvent, timer, merge, pipe } from "rxjs";
-import { map, scan, switchMapTo, takeUntil } from "rxjs/operators";
+import { filter, map, scan, share, switchMapTo, takeUntil } from "rxjs/operators";
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
 const resetButton = document.getElementById("reset");
@@ -22,6 +22,7 @@ const multiplyBy2Click$ = fromEvent(multiplyBy2Button, "click").pipe(
     };
   })
 );
+const toggleEven$ = fromEvent(document.getElementById("toggle-even"), "click");
 const oneMinute$ = timer(60000);
 const end$ = merge(oneMinute$, endClick$);
 const go$ = timer(200, 500).pipe(
@@ -47,6 +48,22 @@ const engine$ = startClick$.pipe(
   )
 );
 const allNumbers$ = engine$.pipe(mapActionToValue);
+const evenNumbers$ = toggleEven$.pipe(
+  filter((event: any) => event.currentTarget.checked),
+  switchMapTo(engine$),
+  filter((action: any) => action.value % 2 === 0),
+  mapActionToValue
+);
+toggleEven$.subscribe((evt: any) => {
+  if (evt.currentTarget.checked) {
+    document.getElementById("even-numbers").classList.remove("hide");
+  } else {
+    document.getElementById("even-numbers").classList.add("hide");
+  }
+});
 allNumbers$.subscribe((value: number) => {
   document.getElementById("numbers").textContent = value.toString();
 });
+evenNumbers$.subscribe((value: number) => {
+    document.getElementById("even-numbers").textContent = value.toString();
+})
