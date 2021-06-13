@@ -27,7 +27,7 @@ const actions$ = merge(go$, resetClick$);
 const engine$ = startClick$.pipe(
   switchMapTo(actions$),
   scan((state, action: any) => {
-    return action.type === 'reset' ? 1 : state + 1;
+    return action.type === "reset" ? 1 : state + 1;
   }, 0)
 );
 engine$.subscribe((value: number) => {
