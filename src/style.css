@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: flex-start;
+  }
+  .numbers {
+    display: flex;
+    justify-content: space-evenly;
+    flex: 1;
+    align-items: center;
+  }
+  .number {
+    font-size: 128px;
+    font-weight: bold;
+  }
+  button {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  
+  .buttons {
+    display: flex;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
