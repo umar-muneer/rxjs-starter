@@ -30,6 +30,9 @@ const multiplyBy2Click$ = fromEvent(multiplyBy2Button, "click").pipe(
   })
 );
 const toggleEven$ = fromEvent(document.getElementById("toggle-even"), "click");
+const toggleChecked$ = toggleEven$.pipe(
+  filter((event: any) => event.currentTarget.checked)
+);
 const oneMinute$ = timer(60000);
 const end$ = merge(oneMinute$, endClick$);
 const go$ = timer(200, 500).pipe(
@@ -56,7 +59,7 @@ const engine$ = startClick$.pipe(
   share()
 );
 const allNumbers$ = engine$.pipe(mapActionToValue);
-const evenNumbers$ = toggleEven$.pipe(
+const evenNumbers$ = toggleChecked$.pipe(
   filter((event: any) => event.currentTarget.checked),
   switchMapTo(engine$),
   filter((action: any) => action.value % 2 === 0),
