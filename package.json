@@ -1,0 +1,23 @@
+{
+  "name": "rxjs-starter",
+  "version": "0.0.1",
+  "description": "A repository that contains code to explain RxJS observables and operators",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umar-muneer/rxjs-starter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umar-muneer/rxjs-starter/issues"
+  },
+  "homepage": "https://github.com/umar-muneer/rxjs-starter#readme",
+  "dependencies": {
+    "rxjs": "^7.1.0",
+    "typescript": "^4.3.2"
+  }
+}
