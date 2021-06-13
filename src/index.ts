@@ -1,5 +1,12 @@
 import { fromEvent, timer, merge, pipe } from "rxjs";
-import { filter, map, scan, share, switchMapTo, takeUntil } from "rxjs/operators";
+import {
+  filter,
+  map,
+  scan,
+  share,
+  switchMapTo,
+  takeUntil,
+} from "rxjs/operators";
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
 const resetButton = document.getElementById("reset");
@@ -45,7 +52,8 @@ const engine$ = startClick$.pipe(
       return { ...state, ...action, value: state.transform(state.value + 1) };
     },
     { type: "none", value: 0, transform: (number) => number }
-  )
+  ),
+  share()
 );
 const allNumbers$ = engine$.pipe(mapActionToValue);
 const evenNumbers$ = toggleEven$.pipe(
@@ -65,5 +73,5 @@ allNumbers$.subscribe((value: number) => {
   document.getElementById("numbers").textContent = value.toString();
 });
 evenNumbers$.subscribe((value: number) => {
-    document.getElementById("even-numbers").textContent = value.toString();
-})
+  document.getElementById("even-numbers").textContent = value.toString();
+});
