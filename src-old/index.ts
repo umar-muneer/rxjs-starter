@@ -1,5 +1,6 @@
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
+const resetButton = document.getElementById("reset");
 let interval = null;
 let i = 0;
 startButton.addEventListener("click", () => {
@@ -14,6 +15,11 @@ startButton.addEventListener("click", () => {
 endButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
+  }
+});
+resetButton.addEventListener("click", () => {
+  if (interval) {
+    i = 0;
   }
 });
 setInterval(() => {
