@@ -11,6 +11,7 @@ const resetClick$ = fromEvent(resetButton, "click").pipe(
     return {
       type: "reset",
       value: 0,
+      transformFn: (number) => number,
     };
   })
 );
