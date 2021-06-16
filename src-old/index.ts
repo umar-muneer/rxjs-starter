@@ -1,8 +1,8 @@
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
 let interval = null;
+let i = 0;
 startButton.addEventListener("click", () => {
-  let i = 0;
   interval = setInterval(() => {
     i += 1;
     document.getElementById('numbers').textContent = i.toString();
