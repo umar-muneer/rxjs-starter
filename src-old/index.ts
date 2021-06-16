@@ -3,6 +3,10 @@ const endButton = document.getElementById("end");
 let interval = null;
 let i = 0;
 startButton.addEventListener("click", () => {
+  let i = 0;
+  if (interval) {
+    clearInterval(interval);
+  }
   interval = setInterval(() => {
     i += 1;
     document.getElementById('numbers').textContent = i.toString();
