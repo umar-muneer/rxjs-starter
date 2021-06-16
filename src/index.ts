@@ -55,7 +55,7 @@ const engine$ = startClick$.pipe(
   scan(
     (state: any, action: any) => {
       if (action.type === "reset") {
-        return { ...state, ...action, value: 1 };
+        return { ...state, ...action };
       }
       return { ...state, ...action, value: state.transform(state.value + 1) };
     },
@@ -66,14 +66,14 @@ const engine$ = startClick$.pipe(
 const allNumbers$ = engine$.pipe(mapActionToValue);
 const evenNumbers$ = evenChecked$.pipe(
   switchMapTo(engine$),
-  map((action: any) =>
-    action.type === "reset" ? { ...action, value: 0 } : { ...action }
-  ),
   filter((action: any) => action.value % 2 === 0),
   mapActionToValue
 );
 const oddNumbers$ = oddChecked$.pipe(
   switchMapTo(engine$),
+  map((action: any) =>
+    action.type === "reset" ? { ...action, value: 1 } : { ...action }
+  ),
   filter((action: any) => action.value % 2 !== 0),
   mapActionToValue
 );
