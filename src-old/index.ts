@@ -13,3 +13,8 @@ endButton.addEventListener("click", () => {
     clearInterval(interval);
   }
 });
+setInterval(() => {
+  if (interval) {
+    clearInterval(interval);
+  }
+}, 60000);
