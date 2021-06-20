@@ -6,7 +6,7 @@ const toggleEven = document.getElementById("toggle-even");
 let interval = null;
 let i = 0;
 let transformFn = (number) => number;
-let evenFn = null;
+let evenFn = (number) => number % 2 === 0;
 startButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
@@ -14,7 +14,7 @@ startButton.addEventListener("click", () => {
   interval = setInterval(() => {
     i = transformFn(i + 1);
     document.getElementById("numbers").textContent = i.toString();
-    if (evenFn && evenFn(i)) {
+    if (evenFn(i)) {
       document.getElementById("even-numbers").textContent = i.toString();
     }
   }, 1000);
@@ -38,10 +38,8 @@ multiplyBy2.addEventListener("click", () => {
 toggleEven.addEventListener("click", (event: any) => {
   if (event.currentTarget.checked) {
     document.getElementById("even-numbers").classList.remove("hide");
-    evenFn = (number) => number % 2 === 0;
   } else {
     document.getElementById("even-numbers").classList.add("hide");
-    evenFn = null;
   }
 });
 setInterval(() => {
