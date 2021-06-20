@@ -22,6 +22,7 @@ startButton.addEventListener("click", () => {
 endButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
+    interval = null;
   }
 });
 resetButton.addEventListener("click", () => {
@@ -45,5 +46,6 @@ toggleEven.addEventListener("click", (event: any) => {
 setInterval(() => {
   if (interval) {
     clearInterval(interval);
+    interval = null;
   }
 }, 60000);
