@@ -8,12 +8,13 @@ startButton.addEventListener("click", () => {
   }
   interval = setInterval(() => {
     i += 1;
-    document.getElementById('numbers').textContent = i.toString();
+    document.getElementById("numbers").textContent = i.toString();
   }, 1000);
 });
 endButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
+    interval = null;
   }
 });
 setInterval(() => {
