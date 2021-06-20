@@ -3,10 +3,12 @@ const endButton = document.getElementById("end");
 const resetButton = document.getElementById("reset");
 const multiplyBy2 = document.getElementById("multiplyBy2");
 const toggleEven = document.getElementById("toggle-even");
+const toggleOdd = document.getElementById("toggle-odd");
 let interval = null;
 let i = 0;
 let transformFn = (number) => number;
 let evenFn = null;
+let oddFn = null;
 startButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
@@ -16,6 +18,9 @@ startButton.addEventListener("click", () => {
     document.getElementById("numbers").textContent = i.toString();
     if (evenFn && evenFn(i)) {
       document.getElementById("even-numbers").textContent = i.toString();
+    }
+    if (oddFn && oddFn(i)) {
+      document.getElementById("odd-numbers").textContent = i.toString();
     }
   }, 1000);
 });
@@ -43,6 +48,15 @@ toggleEven.addEventListener("click", (event: any) => {
   } else {
     document.getElementById("even-numbers").classList.add("hide");
     evenFn = null;
+  }
+});
+toggleOdd.addEventListener("click", (event: any) => {
+  if (event.currentTarget.checked) {
+    document.getElementById("odd-numbers").classList.remove("hide");
+    oddFn = (number) => number % 2 !== 0;
+  } else {
+    document.getElementById("odd-numbers").classList.add("hide");
+    oddFn = null;
   }
 });
 setInterval(() => {
