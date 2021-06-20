@@ -1,5 +1,12 @@
 import { fromEvent, timer, merge } from "rxjs";
-import { filter, map, scan, switchMapTo, takeUntil } from "rxjs/operators";
+import {
+  filter,
+  map,
+  scan,
+  share,
+  switchMapTo,
+  takeUntil,
+} from "rxjs/operators";
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
 const resetButton = document.getElementById("reset");
@@ -24,6 +31,12 @@ const multiplyBy2Click$ = fromEvent(multiplyBy2Button, "click").pipe(
   })
 );
 const toggleEven$ = fromEvent(document.getElementById("toggle-even"), "click");
+const evenChecked$ = toggleEven$.pipe(
+  filter((event: any) => event.currentTarget.checked)
+);
+const evenUnChecked$ = toggleEven$.pipe(
+  filter((event: any) => !event.currentTarget.checked)
+);
 const oneMinute$ = timer(60000);
 const end$ = merge(oneMinute$, endClick$);
 const go$ = timer(200, 500).pipe(
@@ -45,10 +58,12 @@ const engine$ = startClick$.pipe(
       return { ...state, ...action, value: state.transform(state.value + 1) };
     },
     { type: "none", value: 0, transform: (number) => number }
-  )
+  ),
+  share()
 );
 const allNumbers$ = engine$.pipe(map((action: any) => action.value));
-const evenNumbers$ = engine$.pipe(
+const evenNumbers$ = evenChecked$.pipe(
+  switchMapTo(engine$),
   filter((action: any) => action.value % 2 === 0),
   map((action: any) => action.value)
 );
