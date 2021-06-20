@@ -32,10 +32,17 @@ const multiplyBy2Click$ = fromEvent(multiplyBy2Button, "click").pipe(
   })
 );
 const toggleEven$ = fromEvent(document.getElementById("toggle-even"), "click");
+const toggleOdd$ = fromEvent(document.getElementById("toggle-odd"), "click");
 const evenChecked$ = toggleEven$.pipe(
   filter((event: any) => event.currentTarget.checked)
 );
 const evenUnChecked$ = toggleEven$.pipe(
+  filter((event: any) => !event.currentTarget.checked)
+);
+const oddChecked$ = toggleOdd$.pipe(
+  filter((event: any) => event.currentTarget.checked)
+);
+const oddUnChecked$ = toggleOdd$.pipe(
   filter((event: any) => !event.currentTarget.checked)
 );
 const oneMinute$ = timer(60000);
@@ -71,6 +78,11 @@ const evenNumbers$ = evenChecked$.pipe(
   filter((action: any) => action.value % 2 === 0),
   map((action: any) => action.value)
 );
+const oddNumbers$ = oddChecked$.pipe(
+  switchMapTo(engine$.pipe(takeUntil(oddUnChecked$))),
+  filter((action: any) => action.value % 2 !== 0),
+  map((action: any) => action.value)
+);
 toggleEven$.subscribe((event: any) => {
   if (event.currentTarget.checked) {
     document.getElementById("even-numbers").classList.remove("hide");
@@ -78,9 +90,19 @@ toggleEven$.subscribe((event: any) => {
     document.getElementById("even-numbers").classList.add("hide");
   }
 });
+toggleOdd$.subscribe((event: any) => {
+  if (event.currentTarget.checked) {
+    document.getElementById("odd-numbers").classList.remove("hide");
+  } else {
+    document.getElementById("odd-numbers").classList.add("hide");
+  }
+});
 allNumbers$.subscribe((value: number) => {
   document.getElementById("numbers").textContent = value.toString();
 });
 evenNumbers$.subscribe((value: number) => {
   document.getElementById("even-numbers").textContent = value.toString();
+});
+oddNumbers$.subscribe((value: number) => {
+  document.getElementById("odd-numbers").textContent = value.toString();
 });
