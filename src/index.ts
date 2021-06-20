@@ -6,6 +6,7 @@ import {
   share,
   switchMapTo,
   takeUntil,
+  tap,
 } from "rxjs/operators";
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
@@ -63,7 +64,7 @@ const engine$ = startClick$.pipe(
 );
 const allNumbers$ = engine$.pipe(map((action: any) => action.value));
 const evenNumbers$ = evenChecked$.pipe(
-  switchMapTo(engine$),
+  switchMapTo(engine$.pipe(takeUntil(evenUnChecked$))),
   filter((action: any) => action.value % 2 === 0),
   map((action: any) => action.value)
 );
