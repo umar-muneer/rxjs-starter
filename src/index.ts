@@ -65,6 +65,9 @@ const engine$ = startClick$.pipe(
 const allNumbers$ = engine$.pipe(map((action: any) => action.value));
 const evenNumbers$ = evenChecked$.pipe(
   switchMapTo(engine$.pipe(takeUntil(evenUnChecked$))),
+  map((action: any) =>
+    action.type === "reset" ? { ...action, value: 0 } : { ...action }
+  ),
   filter((action: any) => action.value % 2 === 0),
   map((action: any) => action.value)
 );
