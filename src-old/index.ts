@@ -68,7 +68,7 @@ toggleOdd.addEventListener("click", (event: any) => {
     }
     oddInterval = setInterval(() => {
       evenState = transformFn(evenState + 1);
-      const isOdd = oddState % 2 === 0;
+      const isOdd = oddState % 2 !== 0;
       if (isOdd) {
         document.getElementById("odd-numbers").textContent =
           oddState.toString();
