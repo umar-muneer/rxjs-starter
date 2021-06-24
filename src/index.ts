@@ -56,7 +56,6 @@ const go$ = timer(200, 500).pipe(
   takeUntil(end$)
 );
 const actions$ = merge(go$, resetClick$, multiplyBy2Click$);
-const engine$ = actions$.pipe(
 const engine$ = startClick$.pipe(
   switchMapTo(actions$),
   scan(
@@ -67,12 +66,6 @@ const engine$ = startClick$.pipe(
       return { ...state, ...action, value: state.transform(state.value + 1) };
     },
     { type: "none", value: 0, transform: (number) => number }
-  )
-);
-const allNumbers$ = startClick$.pipe(
-  switchMapTo(engine$),
-  map((action: any) => action.value)
-);
   ),
   share()
 );
