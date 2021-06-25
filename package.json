@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx parcel src/index.html",
-    "start-old": "npx parcel src-old/index.html"
+    "start": "rm -rf dist && npx parcel src/index.html",
+    "start-old": "rm -rf dist && npx parcel src-old/index.html",
+    "sonar": "sonar-scanner"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
     "parcel": "^2.0.0-beta.2",
     "rxjs": "^7.1.0",
     "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "sonar-scanner": "^3.1.0"
   }
 }
