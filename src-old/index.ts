@@ -1,7 +1,7 @@
 const startButton = document.getElementById("start");
 const endButton = document.getElementById("end");
-let interval = null;
 startButton.addEventListener("click", () => {
+  let interval = null;
   let i = 0;
   if (interval) {
     clearInterval(interval);
