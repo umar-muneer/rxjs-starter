@@ -57,8 +57,6 @@ const go$ = timer(200, 500).pipe(
 );
 const actions$ = merge(go$, resetClick$, multiplyBy2Click$);
 const engine$ = actions$.pipe(
-const engine$ = startClick$.pipe(
-  switchMapTo(actions$),
   scan(
     (state: any, action: any) => {
       if (action.type === "reset") {
@@ -73,10 +71,6 @@ const allNumbers$ = startClick$.pipe(
   switchMapTo(engine$),
   map((action: any) => action.value)
 );
-  ),
-  share()
-);
-const allNumbers$ = engine$.pipe(map((action: any) => action.value));
 const evenNumbers$ = evenChecked$.pipe(
   switchMapTo(engine$.pipe(takeUntil(evenUnChecked$))),
   map((action: any) =>
