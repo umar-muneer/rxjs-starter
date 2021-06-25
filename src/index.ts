@@ -1,5 +1,5 @@
 import { fromEvent, timer } from "rxjs";
-import { switchMapTo, takeUntil } from "rxjs/operators";
+import { concatAll, map, takeUntil } from "rxjs/operators";
 const startClick$ = fromEvent(document.getElementById("start"), "click");
 const endClick$ = fromEvent(document.getElementById("end"), "click");
 
