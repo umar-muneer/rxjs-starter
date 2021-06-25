@@ -7,6 +7,7 @@ let interval = null;
 let i = 0;
 let transformFn = (number) => number;
 let evenFn = null;
+let reset = false;
 startButton.addEventListener("click", () => {
   if (interval) {
     clearInterval(interval);
@@ -15,7 +16,12 @@ startButton.addEventListener("click", () => {
     i = transformFn(i + 1);
     document.getElementById("numbers").textContent = i.toString();
     if (evenFn && evenFn(i)) {
-      document.getElementById("even-numbers").textContent = i.toString();
+      if (reset) {
+        document.getElementById("even-numbers").textContent = "0";
+        reset = false;
+      } else {
+        document.getElementById("even-numbers").textContent = i.toString();
+      }
     }
   }, 1000);
 });
@@ -29,6 +35,7 @@ resetButton.addEventListener("click", () => {
   if (interval) {
     transformFn = (number) => number;
     i = 0;
+    reset = true;
   }
 });
 multiplyBy2.addEventListener("click", () => {
